@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Banking App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Updated Lucide script to the latest reliable version -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0f172a;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container Simulation */
+        .mobile-container {
+            width: 100%;
+            max-width: 414px;
+            height: 896px;
+            background: #020617;
+            position: relative;
+            overflow-y: auto;
+            border-radius: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            scrollbar-width: none;
+        }
+
+        .mobile-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        .nav-blur {
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(20px);
+        }
+
+        /* Ensure icons are centered and sized correctly */
+        .lucide {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Multi-screen: only active screen visible */
+        .screen {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+        .screen.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Modal overlay - centered */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 50;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.2s ease;
+        }
+        .modal-sheet {
+            background: #0f172a;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 380px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .account-option {
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .account-option.selected {
+            border-color: rgba(99, 102, 241, 0.6);
+            background: rgba(99, 102, 241, 0.12);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container relative">
+        <!-- Top Header -->
+        <header class="p-6 flex justify-between items-center sticky top-0 z-20 nav-blur">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center overflow-hidden">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <p class="text-[10px] text-slate-400 font-medium">Welcome back,</p>
+                    <h2 class="text-sm font-bold">Alex Johnson</h2>
+                </div>
+            </div>
+            <button class="w-10 h-10 rounded-full glass flex items-center justify-center text-slate-300">
+                <i data-lucide="bell" class="w-5 h-5"></i>
+            </button>
+        </header>
+
+        <!-- Main Content: Home Screen -->
+        <main id="screen-home" class="screen active px-6 pb-24">
+            
+            <!-- Balance Section -->
+            <section class="mt-4">
+                <p class="text-slate-400 text-sm">Total Balance</p>
+                <div class="flex items-end gap-2 mt-1">
+                    <h1 class="text-4xl font-bold">$42,850.45</h1>
+                    <span class="text-emerald-400 text-sm font-medium mb-1.5 flex items-center">
+                        <i data-lucide="trending-up" class="w-4 h-4 mr-0.5"></i>
+                        +2.4%
+                    </span>
+                </div>
+            </section>
+
+            <!-- Cards Slider -->
+            <section class="mt-8">
+                <div class="card-gradient rounded-3xl p-6 h-52 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-20">
+                        <i data-lucide="nfc" class="w-12 h-12"></i>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold tracking-widest uppercase">Platinum Pro</span>
+                        <div class="w-10 h-6 bg-yellow-400/80 rounded-md border border-yellow-500/50"></div>
+                    </div>
+                    <div class="mt-8">
+                        <p class="text-xl tracking-[0.2em] font-medium">**** **** **** 8824</p>
+                    </div>
+                    <div class="mt-auto absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                        <div>
+                            <p class="text-[10px] text-indigo-100 uppercase opacity-70">Card Holder</p>
+                            <p class="text-sm font-semibold">ALEX JOHNSON</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-indigo-100 uppercase opacity-70">Expires</p>
+                            <p class="text-sm font-semibold">09/27</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="mt-8 grid grid-cols-4 gap-4">
+                <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                    <div class="w-full aspect-square rounded-2xl glass flex items-center justify-center text-indigo-400 group-active:scale-95 transition-transform">
+                        <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-[11px] text-slate-400 font-medium">Send</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                    <div class="w-full aspect-square rounded-2xl glass flex items-center justify-center text-purple-400 group-active:scale-95 transition-transform">
+                        <i data-lucide="arrow-down-left" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-[11px] text-slate-400 font-medium">Request</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                    <div class="w-full aspect-square rounded-2xl glass flex items-center justify-center text-amber-400 group-active:scale-95 transition-transform">
+                        <i data-lucide="receipt" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-[11px] text-slate-400 font-medium">Bills</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                    <div class="w-full aspect-square rounded-2xl glass flex items-center justify-center text-emerald-400 group-active:scale-95 transition-transform">
+                        <i data-lucide="qr-code" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-[11px] text-slate-400 font-medium">Scan</span>
+                </div>
+            </section>
+
+            <!-- Transactions Section -->
+            <section class="mt-10">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-lg">Transactions</h3>
+                    <button class="text-xs text-indigo-400 font-semibold px-2 py-1 hover:bg-indigo-500/10 rounded-lg transition-colors">See all</button>
+                </div>
+
+                <div class="space-y-3">
+                    <!-- Item 1 -->
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/50 border border-slate-800/50 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <div class="w-11 h-11 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500">
+                                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">Apple Store</p>
+                                <p class="text-[11px] text-slate-500 font-medium">Electronics • 2h ago</p>
+                            </div>
+                        </div>
+                        <p class="font-bold text-sm text-white">-$1,299.00</p>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/50 border border-slate-800/50 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <div class="w-11 h-11 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
+                                <i data-lucide="coffee" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">Starbucks</p>
+                                <p class="text-[11px] text-slate-500 font-medium">Food & Drink • 5h ago</p>
+                            </div>
+                        </div>
+                        <p class="font-bold text-sm text-white">-$12.50</p>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/50 border border-slate-800/50 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <div class="w-11 h-11 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                                <i data-lucide="wallet-2" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">Salary Deposit</p>
+                                <p class="text-[11px] text-slate-500 font-medium">Income • Yesterday</p>
+                            </div>
+                        </div>
+                        <p class="font-bold text-sm text-emerald-400">+$4,500.00</p>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/50 border border-slate-800/50 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <div class="w-11 h-11 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400">
+                                <i data-lucide="tv-2" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">Netflix</p>
+                                <p class="text-[11px] text-slate-500 font-medium">Entertainment • 2 days ago</p>
+                            </div>
+                        </div>
+                        <p class="font-bold text-sm text-white">-$15.99</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Account Screen -->
+        <div id="screen-account" class="screen px-6 pb-24">
+            <div class="mt-4">
+                <h2 class="text-xl font-bold">My Accounts</h2>
+                <p class="text-slate-400 text-sm mt-0.5">Balances across all accounts</p>
+            </div>
+
+            <!-- Account balances list -->
+            <div id="account-list" class="mt-5 space-y-3">
+                <button type="button" class="account-row w-full rounded-2xl glass p-4 flex items-center justify-between border border-slate-700/50 text-left cursor-pointer hover:bg-slate-800/40 transition-colors" data-account-id="1">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+                            <i data-lucide="wallet" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-sm">Primary</p>
+                            <p class="text-[11px] text-slate-500">•••• 8824</p>
+                        </div>
+                    </div>
+                    <p class="font-bold text-sm">$42,850.45</p>
+                </button>
+                <button type="button" class="account-row w-full rounded-2xl glass p-4 flex items-center justify-between border border-slate-700/50 text-left cursor-pointer hover:bg-slate-800/40 transition-colors" data-account-id="2">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                            <i data-lucide="piggy-bank" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-sm">Savings</p>
+                            <p class="text-[11px] text-slate-500">•••• 1234</p>
+                        </div>
+                    </div>
+                    <p class="font-bold text-sm">$12,500.00</p>
+                </button>
+                <button type="button" class="account-row w-full rounded-2xl glass p-4 flex items-center justify-between border border-slate-700/50 text-left cursor-pointer hover:bg-slate-800/40 transition-colors" data-account-id="3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-400">
+                            <i data-lucide="landmark" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-sm">Checking</p>
+                            <p class="text-[11px] text-slate-500">•••• 5566</p>
+                        </div>
+                    </div>
+                    <p class="font-bold text-sm">$3,200.00</p>
+                </button>
+            </div>
+
+            <!-- Total balance summary -->
+            <div class="mt-5 rounded-2xl glass p-4 flex justify-between items-center border border-slate-700/50">
+                <span class="text-slate-400 text-sm font-medium">Total balance</span>
+                <span class="font-bold text-lg text-white">$58,550.45</span>
+            </div>
+
+            <!-- Spending stats -->
+            <div class="mt-8">
+                <h3 class="font-bold text-base">Spending overview</h3>
+                <p class="text-slate-400 text-xs mt-0.5">Last 30 days</p>
+            </div>
+            <div class="mt-4 rounded-2xl glass p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-slate-400 text-sm">Total spent</span>
+                    <span class="font-bold text-lg">$2,847.49</span>
+                </div>
+                <div class="h-28 flex items-end gap-2">
+                    <div class="flex-1 rounded-lg bg-indigo-500/40" style="height: 45%"></div>
+                    <div class="flex-1 rounded-lg bg-indigo-500/60" style="height: 65%"></div>
+                    <div class="flex-1 rounded-lg bg-indigo-500/80" style="height: 55%"></div>
+                    <div class="flex-1 rounded-lg bg-indigo-500" style="height: 85%"></div>
+                    <div class="flex-1 rounded-lg bg-indigo-500/70" style="height: 70%"></div>
+                    <div class="flex-1 rounded-lg bg-indigo-500/50" style="height: 50%"></div>
+                </div>
+                <div class="flex justify-between mt-2 text-[10px] text-slate-500">
+                    <span>Mon</span><span>Wed</span><span>Fri</span><span>Sun</span>
+                </div>
+            </div>
+            <div class="mt-4 space-y-2">
+                <div class="rounded-2xl glass p-3 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-orange-500/20 flex items-center justify-center text-orange-400">
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                        </div>
+                        <p class="font-semibold text-sm">Shopping</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[11px] text-slate-500">$1,420.00</span>
+                        <span class="text-[10px] text-slate-400">48%</span>
+                    </div>
+                </div>
+                <div class="rounded-2xl glass p-3 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400">
+                            <i data-lucide="coffee" class="w-4 h-4"></i>
+                        </div>
+                        <p class="font-semibold text-sm">Food & Drink</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[11px] text-slate-500">$386.20</span>
+                        <span class="text-[10px] text-slate-400">13%</span>
+                    </div>
+                </div>
+                <div class="rounded-2xl glass p-3 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                            <i data-lucide="tv" class="w-4 h-4"></i>
+                        </div>
+                        <p class="font-semibold text-sm">Entertainment</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[11px] text-slate-500">$124.99</span>
+                        <span class="text-[10px] text-slate-400">4%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards Screen -->
+        <div id="screen-cards" class="screen px-6 pb-24">
+            <div class="mt-4">
+                <h2 class="text-xl font-bold">My Cards</h2>
+                <p class="text-slate-400 text-sm mt-0.5">Manage your payment cards</p>
+            </div>
+            <div class="mt-6 space-y-4">
+                <div class="card-gradient rounded-3xl p-6 h-44 relative overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform">
+                    <div class="absolute top-0 right-0 p-4 opacity-20">
+                        <i data-lucide="nfc" class="w-10 h-10"></i>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold tracking-widest uppercase">Platinum Pro</span>
+                        <div class="w-9 h-5 bg-yellow-400/80 rounded border border-yellow-500/50"></div>
+                    </div>
+                    <p class="mt-6 text-lg tracking-[0.15em] font-medium">**** **** **** 8824</p>
+                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                        <span class="text-xs opacity-70">ALEX JOHNSON</span>
+                        <span class="text-xs opacity-70">09/27</span>
+                    </div>
+                </div>
+                <div class="rounded-3xl p-6 h-44 relative overflow-hidden border border-slate-700 bg-slate-800/50 cursor-pointer hover:bg-slate-800/70 transition-colors flex items-center justify-center">
+                    <div class="flex flex-col items-center gap-2 text-slate-400">
+                        <i data-lucide="plus-circle" class="w-10 h-10"></i>
+                        <span class="text-sm font-medium">Add new card</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="screen-settings" class="screen px-6 pb-24">
+            <div class="mt-4">
+                <h2 class="text-xl font-bold">Settings</h2>
+                <p class="text-slate-400 text-sm mt-0.5">Account & preferences</p>
+            </div>
+            <div class="mt-6 space-y-2">
+                <button class="w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="user" class="w-5 h-5 text-slate-400"></i>
+                        <span class="font-medium text-sm">Profile</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500"></i>
+                </button>
+                <button class="w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="shield" class="w-5 h-5 text-slate-400"></i>
+                        <span class="font-medium text-sm">Security</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500"></i>
+                </button>
+                <button class="w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="bell" class="w-5 h-5 text-slate-400"></i>
+                        <span class="font-medium text-sm">Notifications</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500"></i>
+                </button>
+                <button class="w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="help-circle" class="w-5 h-5 text-slate-400"></i>
+                        <span class="font-medium text-sm">Help & Support</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="absolute bottom-0 left-0 right-0 h-20 nav-blur border-t border-slate-800/50 px-8 flex justify-between items-center z-30">
+            <button type="button" data-nav="home" class="nav-btn text-indigo-400 flex flex-col items-center gap-1.5 transition-colors">
+                <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
+                <span class="text-[10px] font-bold">Home</span>
+            </button>
+            <button type="button" data-nav="account" class="nav-btn text-slate-500 flex flex-col items-center gap-1.5 transition-colors hover:text-slate-300">
+                <i data-lucide="user-circle" class="w-6 h-6"></i>
+                <span class="text-[10px]">Account</span>
+            </button>
+            <button type="button" id="btn-quick-action" class="w-12 h-12 rounded-2xl bg-indigo-500 text-white flex items-center justify-center -mt-10 shadow-lg shadow-indigo-500/40 active:scale-90 transition-transform">
+                <i data-lucide="plus" class="w-7 h-7"></i>
+            </button>
+            <button type="button" data-nav="cards" class="nav-btn text-slate-500 flex flex-col items-center gap-1.5 transition-colors hover:text-slate-300">
+                <i data-lucide="credit-card" class="w-6 h-6"></i>
+                <span class="text-[10px]">Cards</span>
+            </button>
+            <button type="button" data-nav="settings" class="nav-btn text-slate-500 flex flex-col items-center gap-1.5 transition-colors hover:text-slate-300">
+                <i data-lucide="settings" class="w-6 h-6"></i>
+                <span class="text-[10px]">Settings</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Send / Transfer Modal -->
+    <div id="transfer-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold">Send Money</h3>
+                <button type="button" id="close-transfer-modal" class="w-10 h-10 rounded-full glass flex items-center justify-center text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs text-slate-400 block mb-2">From account</label>
+                    <div id="from-account-list" class="space-y-2">
+                        <!-- Filled by JS: Primary •••• 8824, Savings •••• 1234, etc. -->
+                    </div>
+                </div>
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Amount</label>
+                    <input type="text" id="transfer-amount" placeholder="0.00" class="w-full rounded-xl bg-slate-800 border border-slate-700 px-4 py-3 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">To</label>
+                    <input type="text" id="transfer-to" placeholder="Email or phone" class="w-full rounded-xl bg-slate-800 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Note <span class="text-slate-500">(optional)</span></label>
+                    <input type="text" id="transfer-note" placeholder="e.g. Rent for March" class="w-full rounded-xl bg-slate-800 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-slate-500">
+                </div>
+                <button type="button" id="transfer-send-btn" class="w-full py-3 rounded-xl font-semibold text-white card-gradient mt-4">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account transactions modal -->
+    <div id="account-transactions-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-sheet max-h-[85vh] flex flex-col" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <h3 id="account-modal-title" class="text-lg font-bold">Account</h3>
+                    <p id="account-modal-subtitle" class="text-slate-400 text-xs mt-0.5">•••• 0000</p>
+                </div>
+                <button type="button" id="close-account-modal" class="w-10 h-10 rounded-full glass flex items-center justify-center text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="rounded-xl glass px-4 py-3 mb-4 flex justify-between items-center">
+                <span class="text-slate-400 text-sm">Available balance</span>
+                <span id="account-modal-balance" class="font-bold text-lg">$0.00</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-2">Recent transactions</p>
+            <div id="account-transactions-list" class="space-y-2 overflow-y-auto flex-1 min-h-0">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) lucide.createIcons();
+
+            const screens = document.querySelectorAll('.screen');
+            const navBtns = document.querySelectorAll('.nav-btn');
+            const transferModal = document.getElementById('transfer-modal');
+            const closeModalBtn = document.getElementById('close-transfer-modal');
+            const quickActionBtn = document.getElementById('btn-quick-action');
+            const accountTransactionsModal = document.getElementById('account-transactions-modal');
+            const closeAccountModalBtn = document.getElementById('close-account-modal');
+
+            const userAccounts = [
+                { id: '1', name: 'Primary', masked: '•••• 8824', balance: 42850.45 },
+                { id: '2', name: 'Savings', masked: '•••• 1234', balance: 12500.00 },
+                { id: '3', name: 'Checking', masked: '•••• 5566', balance: 3200.00 }
+            ];
+            let selectedFromAccountId = userAccounts[0].id;
+
+            const accountTransactions = {
+                '1': [
+                    { title: 'Apple Store', subtitle: 'Electronics • 2h ago', amount: -1299, icon: 'shopping-cart', iconBg: 'bg-orange-500/10', iconColor: 'text-orange-500' },
+                    { title: 'Starbucks', subtitle: 'Food & Drink • 5h ago', amount: -12.50, icon: 'coffee', iconBg: 'bg-blue-500/10', iconColor: 'text-blue-400' },
+                    { title: 'Salary Deposit', subtitle: 'Income • Yesterday', amount: 4500, icon: 'wallet-2', iconBg: 'bg-emerald-500/10', iconColor: 'text-emerald-400' },
+                    { title: 'Netflix', subtitle: 'Entertainment • 2 days ago', amount: -15.99, icon: 'tv-2', iconBg: 'bg-rose-500/10', iconColor: 'text-rose-400' },
+                    { title: 'Amazon', subtitle: 'Shopping • 3 days ago', amount: -89.00, icon: 'package', iconBg: 'bg-amber-500/10', iconColor: 'text-amber-400' }
+                ],
+                '2': [
+                    { title: 'Interest Credit', subtitle: 'Monthly interest • Today', amount: 42.15, icon: 'trending-up', iconBg: 'bg-emerald-500/10', iconColor: 'text-emerald-400' },
+                    { title: 'Transfer from Primary', subtitle: 'Internal transfer • Yesterday', amount: 500, icon: 'arrow-down-left', iconBg: 'bg-indigo-500/10', iconColor: 'text-indigo-400' },
+                    { title: 'Recurring Deposit', subtitle: 'Auto-save • 5 days ago', amount: 200, icon: 'piggy-bank', iconBg: 'bg-emerald-500/10', iconColor: 'text-emerald-400' }
+                ],
+                '3': [
+                    { title: 'Grocery Store', subtitle: 'Shopping • 1h ago', amount: -78.32, icon: 'shopping-bag', iconBg: 'bg-orange-500/10', iconColor: 'text-orange-500' },
+                    { title: 'Utility Bill', subtitle: 'Electric • 2 days ago', amount: -120.00, icon: 'zap', iconBg: 'bg-amber-500/10', iconColor: 'text-amber-400' },
+                    { title: 'Paycheck', subtitle: 'Income • 1 week ago', amount: 2800, icon: 'wallet-2', iconBg: 'bg-emerald-500/10', iconColor: 'text-emerald-400' }
+                ]
+            };
+
+            const fromAccountListEl = document.getElementById('from-account-list');
+            function renderFromAccounts() {
+                if (!fromAccountListEl) return;
+                fromAccountListEl.innerHTML = userAccounts.map(acc => `
+                    <button type="button" class="account-option w-full flex items-center justify-between p-3 rounded-xl bg-slate-800/80 border border-slate-700 text-left ${acc.id === selectedFromAccountId ? 'selected' : ''}" data-account-id="${acc.id}">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-slate-700 flex items-center justify-center">
+                                <i data-lucide="wallet" class="w-4 h-4 text-slate-400"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">${acc.name}</p>
+                                <p class="text-[11px] text-slate-500">${acc.masked}</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-400">$${acc.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+                    </button>
+                `).join('');
+                if (window.lucide) lucide.createIcons();
+                fromAccountListEl.querySelectorAll('.account-option').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        selectedFromAccountId = btn.getAttribute('data-account-id');
+                        renderFromAccounts();
+                    });
+                });
+            }
+            renderFromAccounts();
+
+            function showScreen(screenId) {
+                screens.forEach(el => {
+                    el.classList.toggle('active', el.id === 'screen-' + screenId);
+                });
+                navBtns.forEach(btn => {
+                    const isActive = btn.getAttribute('data-nav') === screenId;
+                    btn.classList.toggle('text-indigo-400', isActive);
+                    btn.classList.toggle('text-slate-500', !isActive);
+                    const label = btn.querySelector('span');
+                    if (label) label.classList.toggle('font-bold', isActive);
+                });
+                if (window.lucide) lucide.createIcons();
+            }
+
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const screenId = btn.getAttribute('data-nav');
+                    if (screenId) showScreen(screenId);
+                });
+            });
+
+            function openTransferModal() {
+                if (transferModal) {
+                    transferModal.classList.add('active');
+                    transferModal.setAttribute('aria-hidden', 'false');
+                    renderFromAccounts();
+                }
+            }
+            function closeTransferModal() {
+                if (transferModal) {
+                    transferModal.classList.remove('active');
+                    transferModal.setAttribute('aria-hidden', 'true');
+                }
+            }
+
+            if (quickActionBtn) quickActionBtn.addEventListener('click', openTransferModal);
+            if (closeModalBtn) closeModalBtn.addEventListener('click', closeTransferModal);
+            if (transferModal) transferModal.addEventListener('click', (e) => { if (e.target === transferModal) closeTransferModal(); });
+
+            function openAccountTransactionsModal(accountId) {
+                const acc = userAccounts.find(a => a.id === accountId);
+                const txList = accountTransactions[accountId] || [];
+                if (!acc || !accountTransactionsModal) return;
+                document.getElementById('account-modal-title').textContent = acc.name;
+                document.getElementById('account-modal-subtitle').textContent = acc.masked;
+                document.getElementById('account-modal-balance').textContent = '$' + acc.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                const listEl = document.getElementById('account-transactions-list');
+                listEl.innerHTML = txList.map(t => {
+                    const amt = t.amount >= 0 ? '+' + t.amount.toFixed(2) : t.amount.toFixed(2);
+                    const amtClass = t.amount >= 0 ? 'text-emerald-400' : 'text-white';
+                    return `
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/50 border border-slate-800/50">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl ${t.iconBg} flex items-center justify-center ${t.iconColor}">
+                                    <i data-lucide="${t.icon}" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm">${t.title}</p>
+                                    <p class="text-[11px] text-slate-500">${t.subtitle}</p>
+                                </div>
+                            </div>
+                            <p class="font-bold text-sm ${amtClass}">$${amt}</p>
+                        </div>
+                    `;
+                }).join('');
+                accountTransactionsModal.classList.add('active');
+                accountTransactionsModal.setAttribute('aria-hidden', 'false');
+                if (window.lucide) lucide.createIcons();
+            }
+            function closeAccountTransactionsModal() {
+                if (accountTransactionsModal) {
+                    accountTransactionsModal.classList.remove('active');
+                    accountTransactionsModal.setAttribute('aria-hidden', 'true');
+                }
+            }
+            if (closeAccountModalBtn) closeAccountModalBtn.addEventListener('click', closeAccountTransactionsModal);
+            if (accountTransactionsModal) accountTransactionsModal.addEventListener('click', (e) => { if (e.target === accountTransactionsModal) closeAccountTransactionsModal(); });
+
+            document.querySelectorAll('.account-row').forEach(row => {
+                row.addEventListener('click', () => {
+                    const id = row.getAttribute('data-account-id');
+                    if (id) openAccountTransactionsModal(id);
+                });
+            });
+
+            const transferSendBtn = document.getElementById('transfer-send-btn');
+            if (transferSendBtn) {
+                transferSendBtn.addEventListener('click', () => {
+                    const amount = document.getElementById('transfer-amount')?.value?.trim();
+                    const to = document.getElementById('transfer-to')?.value?.trim();
+                    const from = userAccounts.find(a => a.id === selectedFromAccountId);
+                    if (!amount || !to) return;
+                    closeTransferModal();
+                    document.getElementById('transfer-amount').value = '';
+                    document.getElementById('transfer-to').value = '';
+                    document.getElementById('transfer-note').value = '';
+                });
+            }
+
+            // Quick actions on Home: Send opens modal, others go to relevant screen or show modal
+            document.querySelectorAll('#screen-home section.grid.grid-cols-4 > div').forEach((el, i) => {
+                el.addEventListener('click', () => {
+                    if (i === 0) openTransferModal();           // Send
+                    else if (i === 1) openTransferModal();      // Request
+                    else if (i === 2) showScreen('account');   // Bills -> Account
+                    else if (i === 3) openTransferModal();      // Scan
+                });
+            });
+        });
+    </script>
+</body>
+</html>
