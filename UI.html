@@ -22,6 +22,16 @@
             min-height: 100vh;
         }
 
+        /* Theme hooks */
+        body.theme-dark {
+            background-color: #0f172a;
+            color: white;
+        }
+        body.theme-light {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
         /* Mobile Container Simulation */
         .mobile-container {
             width: 100%;
@@ -34,6 +44,10 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             scrollbar-width: none;
         }
+        body.theme-light .mobile-container {
+            background: #ffffff;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.18);
+        }
 
         .mobile-container::-webkit-scrollbar {
             display: none;
@@ -45,6 +59,10 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        body.theme-light .glass {
+            background: rgba(241, 245, 249, 0.75);
+            border: 1px solid rgba(15, 23, 42, 0.10);
+        }
 
         .card-gradient {
             background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
@@ -54,6 +72,9 @@
         .nav-blur {
             background: rgba(2, 6, 23, 0.8);
             backdrop-filter: blur(20px);
+        }
+        body.theme-light .nav-blur {
+            background: rgba(255, 255, 255, 0.86);
         }
 
         /* Ensure icons are centered and sized correctly */
@@ -86,6 +107,9 @@
             align-items: center;
             padding: 20px;
         }
+        body.theme-light .modal-overlay {
+            background: rgba(15, 23, 42, 0.35);
+        }
         .modal-overlay.active {
             display: flex;
             animation: fadeIn 0.2s ease;
@@ -100,6 +124,33 @@
             padding: 24px;
             border: 1px solid rgba(255,255,255,0.08);
         }
+        body.theme-light .modal-sheet {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.10);
+        }
+
+        /* Light theme overrides for common Tailwind slate classes used in this file */
+        body.theme-light .text-slate-300 { color: #334155 !important; }
+        body.theme-light .text-slate-400 { color: #475569 !important; }
+        body.theme-light .text-slate-500 { color: #64748b !important; }
+        body.theme-light .text-white { color: #0f172a !important; }
+        body.theme-light .border-slate-700 { border-color: rgba(15, 23, 42, 0.18) !important; }
+        body.theme-light .border-slate-700\/50 { border-color: rgba(15, 23, 42, 0.12) !important; }
+        body.theme-light .border-slate-800\/50 { border-color: rgba(15, 23, 42, 0.10) !important; }
+        body.theme-light .bg-slate-700 { background-color: #e2e8f0 !important; }
+        body.theme-light .bg-slate-800 { background-color: #f8fafc !important; }
+        body.theme-light .bg-slate-800\/50 { background-color: rgba(241, 245, 249, 0.75) !important; }
+        body.theme-light .bg-slate-800\/60 { background-color: rgba(241, 245, 249, 0.85) !important; }
+        body.theme-light .bg-slate-800\/70 { background-color: rgba(241, 245, 249, 0.92) !important; }
+        body.theme-light .bg-slate-800\/80 { background-color: rgba(241, 245, 249, 0.96) !important; }
+        body.theme-light .bg-slate-900\/50 { background-color: rgba(241, 245, 249, 0.85) !important; }
+
+        /* Keep gradient card/button text readable in light mode */
+        body.theme-light .card-gradient,
+        body.theme-light .card-gradient * {
+            color: #ffffff !important;
+        }
+
         .account-option {
             transition: background 0.15s, border-color 0.15s;
         }
@@ -168,7 +219,7 @@
         }
     </style>
 </head>
-<body>
+<body class="theme-dark">
 
     <div class="mobile-container relative">
         <!-- Top Header -->
@@ -475,6 +526,19 @@
                 <p class="text-slate-400 text-sm mt-0.5">Account & preferences</p>
             </div>
             <div class="mt-6 space-y-2">
+                <div class="w-full flex items-center justify-between p-4 rounded-2xl glass border border-slate-800/50">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="moon-star" class="w-5 h-5 text-slate-400"></i>
+                        <div>
+                            <p class="font-medium text-sm">Dark mode</p>
+                            <p id="theme-label" class="text-[11px] text-slate-500">On</p>
+                        </div>
+                    </div>
+                    <label class="switch">
+                        <input id="theme-toggle" type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
                 <button type="button" data-setting="profile" class="setting-btn w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
                     <div class="flex items-center gap-3">
                         <i data-lucide="user" class="w-5 h-5 text-slate-400"></i>
@@ -763,6 +827,8 @@
             const quickActionBtn = document.getElementById('btn-quick-action');
             const accountTransactionsModal = document.getElementById('account-transactions-modal');
             const closeAccountModalBtn = document.getElementById('close-account-modal');
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeLabel = document.getElementById('theme-label');
             const toastEl = document.getElementById('toast');
             const toastMsgEl = document.getElementById('toast-message');
             const toastCloseEl = document.getElementById('toast-close');
@@ -790,6 +856,29 @@
                 if (!el) return;
                 el.classList.remove('active');
                 el.setAttribute('aria-hidden', 'true');
+            }
+
+            function applyTheme(theme) {
+                document.body.classList.toggle('theme-light', theme === 'light');
+                document.body.classList.toggle('theme-dark', theme === 'dark');
+                if (themeToggle) themeToggle.checked = (theme === 'dark');
+                if (themeLabel) themeLabel.textContent = (theme === 'dark') ? 'On' : 'Off';
+                try { localStorage.setItem('theme', theme); } catch {}
+                if (window.lucide) lucide.createIcons();
+            }
+            function initTheme() {
+                let theme = null;
+                try { theme = localStorage.getItem('theme'); } catch {}
+                if (theme !== 'light' && theme !== 'dark') {
+                    theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+                }
+                applyTheme(theme);
+            }
+            initTheme();
+            if (themeToggle) {
+                themeToggle.addEventListener('change', () => {
+                    applyTheme(themeToggle.checked ? 'dark' : 'light');
+                });
             }
 
             const userAccounts = [
