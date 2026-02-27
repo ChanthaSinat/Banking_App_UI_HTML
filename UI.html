@@ -107,6 +107,65 @@
             border-color: rgba(99, 102, 241, 0.6);
             background: rgba(99, 102, 241, 0.12);
         }
+
+        /* Toggle switch */
+        .switch {
+            position: relative;
+            width: 46px;
+            height: 26px;
+            display: inline-block;
+            flex: 0 0 auto;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: rgba(148, 163, 184, 0.25);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            transition: 0.2s;
+            border-radius: 999px;
+        }
+        .slider:before {
+            content: "";
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #e2e8f0;
+            transition: 0.2s;
+            border-radius: 999px;
+        }
+        .switch input:checked + .slider {
+            background: rgba(99, 102, 241, 0.55);
+            border-color: rgba(99, 102, 241, 0.55);
+        }
+        .switch input:checked + .slider:before {
+            transform: translate(20px, -50%);
+            background: white;
+        }
+
+        /* Toast */
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: 110px;
+            transform: translateX(-50%);
+            z-index: 60;
+            display: none;
+            max-width: 380px;
+            width: calc(100% - 40px);
+        }
+        #toast.show {
+            display: block;
+            animation: fadeIn 0.15s ease;
+        }
     </style>
 </head>
 <body>
@@ -416,28 +475,28 @@
                 <p class="text-slate-400 text-sm mt-0.5">Account & preferences</p>
             </div>
             <div class="mt-6 space-y-2">
-                <button class="w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
+                <button type="button" data-setting="profile" class="setting-btn w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
                     <div class="flex items-center gap-3">
                         <i data-lucide="user" class="w-5 h-5 text-slate-400"></i>
                         <span class="font-medium text-sm">Profile</span>
                     </div>
                     <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500"></i>
                 </button>
-                <button class="w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
+                <button type="button" data-setting="security" class="setting-btn w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
                     <div class="flex items-center gap-3">
                         <i data-lucide="shield" class="w-5 h-5 text-slate-400"></i>
                         <span class="font-medium text-sm">Security</span>
                     </div>
                     <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500"></i>
                 </button>
-                <button class="w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
+                <button type="button" data-setting="notifications" class="setting-btn w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
                     <div class="flex items-center gap-3">
                         <i data-lucide="bell" class="w-5 h-5 text-slate-400"></i>
                         <span class="font-medium text-sm">Notifications</span>
                     </div>
                     <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500"></i>
                 </button>
-                <button class="w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
+                <button type="button" data-setting="help" class="setting-btn w-full flex items-center justify-between p-4 rounded-2xl glass hover:bg-slate-700/30 transition-colors text-left">
                     <div class="flex items-center gap-3">
                         <i data-lucide="help-circle" class="w-5 h-5 text-slate-400"></i>
                         <span class="font-medium text-sm">Help & Support</span>
@@ -527,6 +586,172 @@
         </div>
     </div>
 
+    <!-- Settings: Profile modal -->
+    <div id="profile-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold">Profile</h3>
+                <button type="button" data-close-modal="profile-modal" class="w-10 h-10 rounded-full glass flex items-center justify-center text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Full name</label>
+                    <input id="profile-name" type="text" value="Alex Johnson" class="w-full rounded-xl bg-slate-800 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Email</label>
+                    <input id="profile-email" type="email" value="alex@example.com" class="w-full rounded-xl bg-slate-800 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Phone</label>
+                    <input id="profile-phone" type="tel" value="+1 555 0100" class="w-full rounded-xl bg-slate-800 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <button type="button" id="save-profile" class="w-full py-3 rounded-xl font-semibold text-white card-gradient mt-2">Save changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings: Security modal -->
+    <div id="security-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold">Security</h3>
+                <button type="button" data-close-modal="security-modal" class="w-10 h-10 rounded-full glass flex items-center justify-center text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="space-y-3">
+                <div class="rounded-2xl glass p-4 flex items-center justify-between">
+                    <div>
+                        <p class="font-semibold text-sm">Biometric login</p>
+                        <p class="text-[11px] text-slate-500">Use fingerprint/face to sign in</p>
+                    </div>
+                    <label class="switch">
+                        <input id="sec-biometric" type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="rounded-2xl glass p-4 flex items-center justify-between">
+                    <div>
+                        <p class="font-semibold text-sm">Two-factor authentication</p>
+                        <p class="text-[11px] text-slate-500">Extra verification on sign-in</p>
+                    </div>
+                    <label class="switch">
+                        <input id="sec-2fa" type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button type="button" id="change-pin" class="w-full rounded-2xl glass p-4 flex items-center justify-between hover:bg-slate-700/20 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="key-round" class="w-5 h-5 text-slate-400"></i>
+                        <span class="font-semibold text-sm">Change PIN</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500"></i>
+                </button>
+                <button type="button" id="save-security" class="w-full py-3 rounded-xl font-semibold text-white card-gradient mt-2">Save security</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings: Notifications modal -->
+    <div id="notifications-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold">Notifications</h3>
+                <button type="button" data-close-modal="notifications-modal" class="w-10 h-10 rounded-full glass flex items-center justify-center text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="space-y-3">
+                <div class="rounded-2xl glass p-4 flex items-center justify-between">
+                    <div>
+                        <p class="font-semibold text-sm">Transaction alerts</p>
+                        <p class="text-[11px] text-slate-500">Payments, transfers, deposits</p>
+                    </div>
+                    <label class="switch">
+                        <input id="notif-tx" type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="rounded-2xl glass p-4 flex items-center justify-between">
+                    <div>
+                        <p class="font-semibold text-sm">Monthly summary</p>
+                        <p class="text-[11px] text-slate-500">Spending and balance recap</p>
+                    </div>
+                    <label class="switch">
+                        <input id="notif-summary" type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="rounded-2xl glass p-4 flex items-center justify-between">
+                    <div>
+                        <p class="font-semibold text-sm">Marketing updates</p>
+                        <p class="text-[11px] text-slate-500">Product news and offers</p>
+                    </div>
+                    <label class="switch">
+                        <input id="notif-marketing" type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button type="button" id="save-notifications" class="w-full py-3 rounded-xl font-semibold text-white card-gradient mt-2">Save notifications</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings: Help modal -->
+    <div id="help-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold">Help & Support</h3>
+                <button type="button" data-close-modal="help-modal" class="w-10 h-10 rounded-full glass flex items-center justify-center text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="space-y-2">
+                <div class="rounded-2xl glass p-4">
+                    <p class="font-semibold text-sm">Support email</p>
+                    <p class="text-[11px] text-slate-500 mt-0.5">support@bankapp.demo</p>
+                    <button type="button" id="copy-support-email" class="mt-3 w-full py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-sm font-semibold hover:bg-slate-700/40 transition-colors">Copy email</button>
+                </div>
+                <a href="mailto:support@bankapp.demo" class="w-full block rounded-2xl glass p-4 hover:bg-slate-700/20 transition-colors">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="mail" class="w-5 h-5 text-slate-400"></i>
+                            <span class="font-semibold text-sm">Contact support</span>
+                        </div>
+                        <i data-lucide="external-link" class="w-5 h-5 text-slate-500"></i>
+                    </div>
+                </a>
+                <button type="button" id="report-issue" class="w-full rounded-2xl glass p-4 hover:bg-slate-700/20 transition-colors text-left">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="bug" class="w-5 h-5 text-slate-400"></i>
+                            <span class="font-semibold text-sm">Report an issue</span>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500"></i>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast">
+        <div class="glass rounded-2xl px-4 py-3 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/15 flex items-center justify-center text-emerald-400">
+                    <i data-lucide="check" class="w-5 h-5"></i>
+                </div>
+                <p id="toast-message" class="text-sm font-semibold">Saved</p>
+            </div>
+            <button type="button" id="toast-close" class="w-9 h-9 rounded-xl bg-slate-800/60 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) lucide.createIcons();
@@ -538,6 +763,34 @@
             const quickActionBtn = document.getElementById('btn-quick-action');
             const accountTransactionsModal = document.getElementById('account-transactions-modal');
             const closeAccountModalBtn = document.getElementById('close-account-modal');
+            const toastEl = document.getElementById('toast');
+            const toastMsgEl = document.getElementById('toast-message');
+            const toastCloseEl = document.getElementById('toast-close');
+
+            let toastTimer = null;
+            function showToast(message) {
+                if (!toastEl || !toastMsgEl) return;
+                toastMsgEl.textContent = message;
+                toastEl.classList.add('show');
+                if (window.lucide) lucide.createIcons();
+                if (toastTimer) clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2200);
+            }
+            if (toastCloseEl) toastCloseEl.addEventListener('click', () => toastEl?.classList.remove('show'));
+
+            function openModal(modalId) {
+                const el = document.getElementById(modalId);
+                if (!el) return;
+                el.classList.add('active');
+                el.setAttribute('aria-hidden', 'false');
+                if (window.lucide) lucide.createIcons();
+            }
+            function closeModal(modalId) {
+                const el = document.getElementById(modalId);
+                if (!el) return;
+                el.classList.remove('active');
+                el.setAttribute('aria-hidden', 'true');
+            }
 
             const userAccounts = [
                 { id: '1', name: 'Primary', masked: '•••• 8824', balance: 42850.45 },
@@ -676,6 +929,64 @@
                     const id = row.getAttribute('data-account-id');
                     if (id) openAccountTransactionsModal(id);
                 });
+            });
+
+            // Settings: open modals
+            document.querySelectorAll('.setting-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const key = btn.getAttribute('data-setting');
+                    if (key === 'profile') openModal('profile-modal');
+                    if (key === 'security') openModal('security-modal');
+                    if (key === 'notifications') openModal('notifications-modal');
+                    if (key === 'help') openModal('help-modal');
+                });
+            });
+
+            // Settings: close buttons
+            document.querySelectorAll('[data-close-modal]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.getAttribute('data-close-modal');
+                    if (id) closeModal(id);
+                });
+            });
+            ['profile-modal','security-modal','notifications-modal','help-modal'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('click', (e) => { if (e.target === el) closeModal(id); });
+            });
+
+            // Settings: actions
+            const saveProfileBtn = document.getElementById('save-profile');
+            if (saveProfileBtn) saveProfileBtn.addEventListener('click', () => {
+                closeModal('profile-modal');
+                showToast('Profile updated');
+            });
+            const saveSecurityBtn = document.getElementById('save-security');
+            if (saveSecurityBtn) saveSecurityBtn.addEventListener('click', () => {
+                closeModal('security-modal');
+                showToast('Security settings saved');
+            });
+            const changePinBtn = document.getElementById('change-pin');
+            if (changePinBtn) changePinBtn.addEventListener('click', () => {
+                showToast('PIN change flow (demo)');
+            });
+            const saveNotifsBtn = document.getElementById('save-notifications');
+            if (saveNotifsBtn) saveNotifsBtn.addEventListener('click', () => {
+                closeModal('notifications-modal');
+                showToast('Notification preferences saved');
+            });
+            const copySupportBtn = document.getElementById('copy-support-email');
+            if (copySupportBtn) copySupportBtn.addEventListener('click', async () => {
+                const email = 'support@bankapp.demo';
+                try {
+                    await navigator.clipboard.writeText(email);
+                    showToast('Support email copied');
+                } catch {
+                    showToast('Copy not supported in this browser');
+                }
+            });
+            const reportIssueBtn = document.getElementById('report-issue');
+            if (reportIssueBtn) reportIssueBtn.addEventListener('click', () => {
+                showToast('Issue report opened (demo)');
             });
 
             const transferSendBtn = document.getElementById('transfer-send-btn');
