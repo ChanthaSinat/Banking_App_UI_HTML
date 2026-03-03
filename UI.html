@@ -36,12 +36,19 @@
         .mobile-container {
             width: 100%;
             max-width: 414px;
+<<<<<<< HEAD
             min-height: 100vh;
             height: auto;
             background: #020617;
             position: relative;
             overflow-y: auto;
             overflow-x: hidden;
+=======
+            height: 896px;
+            background: #020617;
+            position: relative;
+            overflow-y: auto;
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
             border-radius: 40px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             scrollbar-width: none;
@@ -63,9 +70,13 @@
             flex: 1;
             min-height: 0;
             overflow-y: auto;
+<<<<<<< HEAD
             overflow-x: hidden;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
+=======
+            scrollbar-width: none;
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
         }
         #app-view .app-scroll::-webkit-scrollbar {
             display: none;
@@ -128,6 +139,7 @@
         #app-view .app-scroll {
             padding-bottom: 5rem;
         }
+<<<<<<< HEAD
         /* Scan button - pops out above nav */
         #app-view nav .nav-scan-wrap {
             position: relative;
@@ -155,6 +167,8 @@
         body.theme-light #app-view nav .nav-btn-scan { border-color: #ffffff; }
         #app-view nav .nav-btn-scan:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.55); }
         #app-view nav .nav-btn-scan:active { transform: scale(0.98); }
+=======
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
         .safe-area-pb {
             padding-bottom: env(safe-area-inset-bottom, 0);
         }
@@ -468,6 +482,7 @@
                 </div>
             </section>
 
+<<<<<<< HEAD
             <!-- Balance meta / quick glance -->
             <section class="mt-3 flex items-center justify-between text-[11px] text-slate-500">
                 <div class="flex items-center gap-2">
@@ -479,16 +494,49 @@
                 <div class="flex items-center gap-1">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                     <span>Updated just now</span>
+=======
+            <!-- Cards Slider -->
+            <section class="mt-8">
+                <div class="card-gradient rounded-3xl p-6 h-52 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-20">
+                        <i data-lucide="nfc" class="w-12 h-12"></i>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold tracking-widest uppercase">Platinum Pro</span>
+                        <div class="w-10 h-6 bg-yellow-400/80 rounded-md border border-yellow-500/50"></div>
+                    </div>
+                    <div class="mt-8">
+                        <p class="text-xl tracking-[0.2em] font-medium">**** **** **** 8824</p>
+                    </div>
+                    <div class="mt-auto absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                        <div>
+                            <p class="text-[10px] text-indigo-100 uppercase opacity-70">Card Holder</p>
+                            <p class="text-sm font-semibold">ALEX JOHNSON</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-indigo-100 uppercase opacity-70">Expires</p>
+                            <p class="text-sm font-semibold">09/27</p>
+                        </div>
+                    </div>
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
                 </div>
             </section>
 
             <!-- Quick Actions -->
+<<<<<<< HEAD
             <section class="mt-6 grid grid-cols-4 gap-4">
+=======
+            <section class="mt-8 grid grid-cols-4 gap-4">
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
                 <div class="flex flex-col items-center gap-2 group cursor-pointer">
                     <div class="w-full aspect-square rounded-2xl glass flex items-center justify-center text-indigo-400 group-active:scale-95 transition-transform">
                         <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
                     </div>
+<<<<<<< HEAD
                     <span class="text-[11px] text-slate-400 font-medium">Transfer</span>
+=======
+                    <span class="text-[11px] text-slate-400 font-medium">Send</span>
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
                 </div>
                 <div class="flex flex-col items-center gap-2 group cursor-pointer">
                     <div class="w-full aspect-square rounded-2xl glass flex items-center justify-center text-purple-400 group-active:scale-95 transition-transform">
@@ -510,6 +558,7 @@
                 </div>
             </section>
 
+<<<<<<< HEAD
             <!-- Overview cards -->
             <section class="mt-8 space-y-4">
                 <div class="grid grid-cols-2 gap-3">
@@ -569,6 +618,70 @@
                                 <p class="text-[11px] text-slate-300">Next recurring bills due in 3 days.</p>
                             </div>
                         </div>
+=======
+            <!-- Transactions Section -->
+            <section class="mt-10">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-lg">Transactions</h3>
+                    <button class="text-xs text-indigo-400 font-semibold px-2 py-1 hover:bg-indigo-500/10 rounded-lg transition-colors">See all</button>
+                </div>
+
+                <div class="space-y-3">
+                    <!-- Item 1 -->
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/50 border border-slate-800/50 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <div class="w-11 h-11 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500">
+                                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">Apple Store</p>
+                                <p class="text-[11px] text-slate-500 font-medium">Electronics • 2h ago</p>
+                            </div>
+                        </div>
+                        <p class="font-bold text-sm text-white">-$1,299.00</p>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/50 border border-slate-800/50 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <div class="w-11 h-11 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
+                                <i data-lucide="coffee" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">Starbucks</p>
+                                <p class="text-[11px] text-slate-500 font-medium">Food & Drink • 5h ago</p>
+                            </div>
+                        </div>
+                        <p class="font-bold text-sm text-white">-$12.50</p>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/50 border border-slate-800/50 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <div class="w-11 h-11 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                                <i data-lucide="wallet-2" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">Salary Deposit</p>
+                                <p class="text-[11px] text-slate-500 font-medium">Income • Yesterday</p>
+                            </div>
+                        </div>
+                        <p class="font-bold text-sm text-emerald-400">+$4,500.00</p>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/50 border border-slate-800/50 hover:bg-slate-800/40 transition-colors cursor-pointer">
+                        <div class="flex items-center gap-4">
+                            <div class="w-11 h-11 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400">
+                                <i data-lucide="tv-2" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">Netflix</p>
+                                <p class="text-[11px] text-slate-500 font-medium">Entertainment • 2 days ago</p>
+                            </div>
+                        </div>
+                        <p class="font-bold text-sm text-white">-$15.99</p>
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
                     </div>
                 </div>
             </section>
@@ -581,17 +694,63 @@
                 <p class="text-slate-400 text-sm mt-0.5">Balances across all accounts</p>
             </div>
 
+<<<<<<< HEAD
             <!-- Account balances list (filled by JS) -->
             <div id="account-list" class="mt-5 space-y-3"></div>
             <button type="button" id="account-add-new-btn" class="mt-4 w-full rounded-2xl glass p-4 border border-slate-700/50 flex items-center justify-center gap-2 text-slate-400 hover:text-slate-300 hover:bg-slate-800/40 transition-colors">
                 <i data-lucide="plus" class="w-5 h-5"></i>
                 <span class="font-medium text-sm">Create new account</span>
             </button>
+=======
+            <!-- Account balances list -->
+            <div id="account-list" class="mt-5 space-y-3">
+                <button type="button" class="account-row w-full rounded-2xl glass p-4 flex items-center justify-between border border-slate-700/50 text-left cursor-pointer hover:bg-slate-800/40 transition-colors" data-account-id="1">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+                            <i data-lucide="wallet" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-sm">Primary</p>
+                            <p class="text-[11px] text-slate-500">•••• 8824</p>
+                        </div>
+                    </div>
+                    <p class="font-bold text-sm">$42,850.45</p>
+                </button>
+                <button type="button" class="account-row w-full rounded-2xl glass p-4 flex items-center justify-between border border-slate-700/50 text-left cursor-pointer hover:bg-slate-800/40 transition-colors" data-account-id="2">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                            <i data-lucide="piggy-bank" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-sm">Savings</p>
+                            <p class="text-[11px] text-slate-500">•••• 1234</p>
+                        </div>
+                    </div>
+                    <p class="font-bold text-sm">$12,500.00</p>
+                </button>
+                <button type="button" class="account-row w-full rounded-2xl glass p-4 flex items-center justify-between border border-slate-700/50 text-left cursor-pointer hover:bg-slate-800/40 transition-colors" data-account-id="3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-400">
+                            <i data-lucide="landmark" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-sm">Checking</p>
+                            <p class="text-[11px] text-slate-500">•••• 5566</p>
+                        </div>
+                    </div>
+                    <p class="font-bold text-sm">$3,200.00</p>
+                </button>
+            </div>
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
 
             <!-- Total balance summary -->
             <div class="mt-5 rounded-2xl glass p-4 flex justify-between items-center border border-slate-700/50">
                 <span class="text-slate-400 text-sm font-medium">Total balance</span>
+<<<<<<< HEAD
                 <span id="account-total-balance" class="font-bold text-lg text-white">$0.00</span>
+=======
+                <span class="font-bold text-lg text-white">$58,550.45</span>
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
             </div>
 
             <!-- Spending stats -->
@@ -662,6 +821,7 @@
                 <h2 class="text-xl font-bold">My Cards</h2>
                 <p class="text-slate-400 text-sm mt-0.5">Manage your payment cards</p>
             </div>
+<<<<<<< HEAD
             <div id="cards-list" class="mt-6 space-y-4">
                 <!-- Filled by JS -->
             </div>
@@ -669,6 +829,30 @@
                 <i data-lucide="plus-circle" class="w-10 h-10"></i>
                 <span class="text-sm font-medium">Add new card</span>
             </button>
+=======
+            <div class="mt-6 space-y-4">
+                <div class="card-gradient rounded-3xl p-6 h-44 relative overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform">
+                    <div class="absolute top-0 right-0 p-4 opacity-20">
+                        <i data-lucide="nfc" class="w-10 h-10"></i>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <span class="text-xs font-bold tracking-widest uppercase">Platinum Pro</span>
+                        <div class="w-9 h-5 bg-yellow-400/80 rounded border border-yellow-500/50"></div>
+                    </div>
+                    <p class="mt-6 text-lg tracking-[0.15em] font-medium">**** **** **** 8824</p>
+                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                        <span class="text-xs opacity-70">ALEX JOHNSON</span>
+                        <span class="text-xs opacity-70">09/27</span>
+                    </div>
+                </div>
+                <div class="rounded-3xl p-6 h-44 relative overflow-hidden border border-slate-700 bg-slate-800/50 cursor-pointer hover:bg-slate-800/70 transition-colors flex items-center justify-center">
+                    <div class="flex flex-col items-center gap-2 text-slate-400">
+                        <i data-lucide="plus-circle" class="w-10 h-10"></i>
+                        <span class="text-sm font-medium">Add new card</span>
+                    </div>
+                </div>
+            </div>
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
         </div>
 
         <!-- Settings Screen -->
@@ -731,7 +915,11 @@
 
         </div>
         <!-- Bottom Navigation (sticky to bottom) -->
+<<<<<<< HEAD
         <nav class="flex-shrink-0 h-20 min-h-[5rem] px-2 flex items-end justify-between z-40 rounded-b-[40px] safe-area-pb" role="navigation" aria-label="Main navigation">
+=======
+        <nav class="flex-shrink-0 h-20 min-h-[5rem] px-4 flex items-center justify-between z-40 rounded-b-[40px] safe-area-pb" role="navigation" aria-label="Main navigation">
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
             <button type="button" data-nav="home" class="nav-btn flex-1 min-w-0 flex flex-col items-center justify-center gap-1 py-2 text-indigo-400 cursor-pointer transition-colors hover:opacity-90 active:scale-95">
                 <i data-lucide="layout-dashboard" class="w-6 h-6 flex-shrink-0"></i>
                 <span class="text-[10px] font-bold">Home</span>
@@ -740,11 +928,14 @@
                 <i data-lucide="user-circle" class="w-6 h-6 flex-shrink-0"></i>
                 <span class="text-[10px]">Account</span>
             </button>
+<<<<<<< HEAD
             <div class="nav-scan-wrap">
                 <button type="button" id="nav-scan-btn" class="nav-btn-scan" aria-label="Scan">
                     <i data-lucide="scan" class="w-7 h-7"></i>
                 </button>
             </div>
+=======
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
             <button type="button" data-nav="cards" class="nav-btn flex-1 min-w-0 flex flex-col items-center justify-center gap-1 py-2 text-slate-500 cursor-pointer transition-colors hover:text-slate-300 hover:opacity-90 active:scale-95">
                 <i data-lucide="credit-card" class="w-6 h-6 flex-shrink-0"></i>
                 <span class="text-[10px]">Cards</span>
@@ -821,11 +1012,19 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <!-- Transfer Modal -->
     <div id="transfer-modal" class="modal-overlay" aria-hidden="true">
         <div class="modal-sheet" onclick="event.stopPropagation()">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-lg font-bold">Transfer</h3>
+=======
+    <!-- Send / Transfer Modal -->
+    <div id="transfer-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold">Send Money</h3>
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
                 <button type="button" id="close-transfer-modal" class="w-10 h-10 rounded-full glass flex items-center justify-center text-slate-400 hover:text-white">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
@@ -849,7 +1048,11 @@
                     <label class="text-xs text-slate-400 block mb-1">Note <span class="text-slate-500">(optional)</span></label>
                     <input type="text" id="transfer-note" placeholder="e.g. Rent for March" class="w-full rounded-xl bg-slate-800 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-slate-500">
                 </div>
+<<<<<<< HEAD
                 <button type="button" id="transfer-send-btn" class="w-full py-3 rounded-xl font-semibold text-white card-gradient mt-4">Transfer</button>
+=======
+                <button type="button" id="transfer-send-btn" class="w-full py-3 rounded-xl font-semibold text-white card-gradient mt-4">Send</button>
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
             </div>
         </div>
     </div>
@@ -940,6 +1143,7 @@
                     <span class="font-semibold text-sm">Phone Bill</span>
                     <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500 ml-auto"></i>
                 </button>
+<<<<<<< HEAD
                 <button type="button" id="bill-option-electricity" class="bill-option w-full flex items-center gap-4 p-4 rounded-2xl glass border border-slate-700/50 hover:bg-slate-700/30 transition-colors text-left">
                     <div class="w-12 h-12 rounded-xl bg-yellow-500/20 flex items-center justify-center text-yellow-400">
                         <i data-lucide="zap" class="w-6 h-6"></i>
@@ -1103,6 +1307,8 @@
                     <label class="text-xs text-slate-400 block mb-1">Linked account</label>
                     <div id="card-details-linked-account-list" class="space-y-2"></div>
                 </div>
+=======
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
             </div>
         </div>
     </div>
@@ -1191,6 +1397,7 @@
                         <span class="slider"></span>
                     </label>
                 </div>
+<<<<<<< HEAD
                 <div class="rounded-2xl glass p-4 space-y-3">
                     <div class="flex items-center gap-3">
                         <i data-lucide="key-round" class="w-5 h-5 text-slate-400"></i>
@@ -1212,6 +1419,15 @@
                     <p id="sec-pin-error" class="text-sm text-red-400 hidden"></p>
                     <button type="button" id="set-transaction-pin" class="w-full py-2 rounded-xl font-semibold border border-indigo-500/50 text-indigo-400 hover:bg-indigo-500/10">Set PIN</button>
                 </div>
+=======
+                <button type="button" id="change-pin" class="w-full rounded-2xl glass p-4 flex items-center justify-between hover:bg-slate-700/20 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="key-round" class="w-5 h-5 text-slate-400"></i>
+                        <span class="font-semibold text-sm">Change PIN</span>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-slate-500"></i>
+                </button>
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
                 <button type="button" id="save-security" class="w-full py-3 rounded-xl font-semibold text-white card-gradient mt-2">Save security</button>
             </div>
         </div>
@@ -1519,6 +1735,7 @@
             function clearCurrentUser() {
                 try { localStorage.removeItem(AUTH_CURRENT_KEY); } catch {}
             }
+<<<<<<< HEAD
             function getTransactionPin() {
                 const u = getCurrentUser();
                 if (!u || !u.username) return null;
@@ -1569,6 +1786,8 @@
             function saveCards(cards) {
                 try { localStorage.setItem(getCardsKey(), JSON.stringify(cards)); } catch {}
             }
+=======
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
 
             const authView = document.getElementById('auth-view');
             const appView = document.getElementById('app-view');
@@ -1880,12 +2099,23 @@
                 showAuth();
             });
 
+<<<<<<< HEAD
             let userAccounts = getAccounts();
             let selectedFromAccountId = userAccounts[0] ? userAccounts[0].id : '';
             let selectedWithdrawAccountId = userAccounts[0] ? userAccounts[0].id : '';
             let selectedDepositToAccountId = userAccounts[0] ? userAccounts[0].id : '';
             let selectedAddCardAccountId = userAccounts[0] ? userAccounts[0].id : '';
             let selectedElectricityAccountId = userAccounts[0] ? userAccounts[0].id : '';
+=======
+            const userAccounts = [
+                { id: '1', name: 'Primary', masked: '•••• 8824', balance: 42850.45 },
+                { id: '2', name: 'Savings', masked: '•••• 1234', balance: 12500.00 },
+                { id: '3', name: 'Checking', masked: '•••• 5566', balance: 3200.00 }
+            ];
+            let selectedFromAccountId = userAccounts[0].id;
+            let selectedWithdrawAccountId = userAccounts[0].id;
+            let selectedDepositToAccountId = userAccounts[0].id;
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
 
             const accountTransactions = {
                 '1': [
@@ -1986,6 +2216,7 @@
                 });
             }
 
+<<<<<<< HEAD
             const electricityAccountListEl = document.getElementById('electricity-account-list');
             function renderElectricityAccounts() {
                 if (!electricityAccountListEl) return;
@@ -2016,6 +2247,8 @@
                 });
             }
 
+=======
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
             function showScreen(screenId) {
                 screens.forEach(el => {
                     el.classList.toggle('active', el.id === 'screen-' + screenId);
@@ -2027,8 +2260,11 @@
                     const label = btn.querySelector('span');
                     if (label) label.classList.toggle('font-bold', isActive);
                 });
+<<<<<<< HEAD
                 if (screenId === 'account') { userAccounts = getAccounts(); renderAccountList(); }
                 if (screenId === 'cards') renderCardsList();
+=======
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
                 if (window.lucide) lucide.createIcons();
             }
 
@@ -2080,6 +2316,7 @@
             if (closeModalBtn) closeModalBtn.addEventListener('click', closeTransferModal);
             if (transferModal) transferModal.addEventListener('click', (e) => { if (e.target === transferModal) closeTransferModal(); });
 
+<<<<<<< HEAD
             const pinVerifyModal = document.getElementById('pin-verify-modal');
             const pinVerifyInput = document.getElementById('pin-verify-input');
             const pinVerifyError = document.getElementById('pin-verify-error');
@@ -2133,6 +2370,8 @@
             });
             if (pinVerifyModal) pinVerifyModal.addEventListener('click', (e) => { if (e.target === pinVerifyModal) closePinVerifyModal(); });
 
+=======
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
             const withdrawalModal = document.getElementById('withdrawal-modal');
             const closeWithdrawalModalBtn = document.getElementById('close-withdrawal-modal');
             function openWithdrawalModal() {
@@ -2197,6 +2436,7 @@
             if (billsModal) billsModal.addEventListener('click', (e) => { if (e.target === billsModal) closeBillsModal(); });
             document.querySelectorAll('.bill-option').forEach((btn) => {
                 btn.addEventListener('click', () => {
+<<<<<<< HEAD
                     if (btn.id === 'bill-option-electricity') {
                         closeBillsModal();
                         document.getElementById('electricity-address').value = '';
@@ -2234,6 +2474,10 @@
                 requirePinThen(() => {
                     if (electricityBillModal) { electricityBillModal.classList.remove('active'); electricityBillModal.setAttribute('aria-hidden', 'true'); }
                     showToast('Electricity payment of $' + amount.toFixed(2) + ' submitted from ' + (fromAcc?.name || 'account') + (address ? ' • ' + address : '') + (homeId ? ' (ID: ' + homeId + ')' : ''));
+=======
+                    closeBillsModal();
+                    openTransferModal();
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
                 });
             });
             const withdrawSubmitBtn = document.getElementById('withdraw-submit-btn');
@@ -2343,6 +2587,18 @@
                 closeModal('profile-modal');
                 showToast('Profile updated');
             });
+<<<<<<< HEAD
+=======
+            const saveSecurityBtn = document.getElementById('save-security');
+            if (saveSecurityBtn) saveSecurityBtn.addEventListener('click', () => {
+                closeModal('security-modal');
+                showToast('Security settings saved');
+            });
+            const changePinBtn = document.getElementById('change-pin');
+            if (changePinBtn) changePinBtn.addEventListener('click', () => {
+                showToast('PIN change flow (demo)');
+            });
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
             const saveNotifsBtn = document.getElementById('save-notifications');
             if (saveNotifsBtn) saveNotifsBtn.addEventListener('click', () => {
                 closeModal('notifications-modal');
@@ -2377,6 +2633,7 @@
                 });
             }
 
+<<<<<<< HEAD
             // Quick actions on Home: Transfer, Deposit, Withdrawal, Bills (each requires PIN except opening Bills list)
             document.querySelectorAll('#screen-home section.grid.grid-cols-4 > div').forEach((el, i) => {
                 el.addEventListener('click', () => {
@@ -2632,6 +2889,17 @@
                 const el = document.getElementById(id);
                 if (el) el.addEventListener('click', (e) => { if (e.target === el) closeModal(id); });
             });
+=======
+            // Quick actions on Home: Send, Deposit, Withdrawal, Bills each open their own modal
+            document.querySelectorAll('#screen-home section.grid.grid-cols-4 > div').forEach((el, i) => {
+                el.addEventListener('click', () => {
+                    if (i === 0) openTransferModal();           // Send
+                    else if (i === 1) openDepositModal();       // Deposit
+                    else if (i === 2) openWithdrawalModal();    // Withdrawal
+                    else if (i === 3) openBillsModal();         // Bills
+                });
+            });
+>>>>>>> 10881ef62df54a89d98fb3433a4a08b23c8401a7
         });
     </script>
 </body>
