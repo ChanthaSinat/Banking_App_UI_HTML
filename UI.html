@@ -951,7 +951,7 @@
         </div>
     </div>
 
-    <!-- Electricity bill modal (address + home ID) -->
+    <!-- Electricity bill modal (address + home ID + amount + from account) -->
     <div id="electricity-bill-modal" class="modal-overlay" aria-hidden="true">
         <div class="modal-sheet" onclick="event.stopPropagation()">
             <div class="flex justify-between items-center mb-6">
@@ -968,6 +968,16 @@
                 <div>
                     <label class="text-xs text-slate-400 block mb-1">Home ID</label>
                     <input type="text" id="electricity-home-id" placeholder="Meter / Home ID" class="w-full rounded-xl bg-slate-800 border border-slate-700 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Amount</label>
+                    <input type="text" id="electricity-amount" placeholder="0.00" class="w-full rounded-xl bg-slate-800 border border-slate-700 px-4 py-3 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500" inputmode="decimal">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-400 block mb-2">Pay from account</label>
+                    <div id="electricity-account-list" class="space-y-2">
+                        <!-- Filled by JS -->
+                    </div>
                 </div>
                 <button type="button" id="electricity-pay-btn" class="w-full py-3 rounded-xl font-semibold text-white card-gradient mt-4">Pay (requires PIN)</button>
             </div>
@@ -1875,6 +1885,7 @@
             let selectedWithdrawAccountId = userAccounts[0] ? userAccounts[0].id : '';
             let selectedDepositToAccountId = userAccounts[0] ? userAccounts[0].id : '';
             let selectedAddCardAccountId = userAccounts[0] ? userAccounts[0].id : '';
+            let selectedElectricityAccountId = userAccounts[0] ? userAccounts[0].id : '';
 
             const accountTransactions = {
                 '1': [
@@ -1971,6 +1982,36 @@
                     btn.addEventListener('click', () => {
                         selectedDepositToAccountId = btn.getAttribute('data-deposit-to-account-id');
                         renderDepositToAccounts();
+                    });
+                });
+            }
+
+            const electricityAccountListEl = document.getElementById('electricity-account-list');
+            function renderElectricityAccounts() {
+                if (!electricityAccountListEl) return;
+                userAccounts = getAccounts();
+                if (!selectedElectricityAccountId && userAccounts[0]) {
+                    selectedElectricityAccountId = userAccounts[0].id;
+                }
+                electricityAccountListEl.innerHTML = userAccounts.map(acc => `
+                    <button type="button" class="account-option w-full flex items-center justify-between p-3 rounded-xl bg-slate-800/80 border border-slate-700 text-left ${acc.id === selectedElectricityAccountId ? 'selected' : ''}" data-electricity-account-id="${acc.id}">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-slate-700 flex items-center justify-center">
+                                <i data-lucide="wallet" class="w-4 h-4 text-slate-400"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">${acc.name}</p>
+                                <p class="text-[11px] text-slate-500">${acc.masked}</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-400">$${acc.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+                    </button>
+                `).join('');
+                if (window.lucide) lucide.createIcons();
+                electricityAccountListEl.querySelectorAll('.account-option').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        selectedElectricityAccountId = btn.getAttribute('data-electricity-account-id');
+                        renderElectricityAccounts();
                     });
                 });
             }
@@ -2160,6 +2201,9 @@
                         closeBillsModal();
                         document.getElementById('electricity-address').value = '';
                         document.getElementById('electricity-home-id').value = '';
+                        document.getElementById('electricity-amount').value = '';
+                        selectedElectricityAccountId = userAccounts[0] ? userAccounts[0].id : selectedElectricityAccountId;
+                        renderElectricityAccounts();
                         document.getElementById('electricity-bill-modal')?.classList.add('active');
                         document.getElementById('electricity-bill-modal')?.setAttribute('aria-hidden', 'false');
                         if (window.lucide) lucide.createIcons();
@@ -2176,9 +2220,20 @@
             document.getElementById('electricity-pay-btn')?.addEventListener('click', () => {
                 const address = document.getElementById('electricity-address')?.value?.trim();
                 const homeId = document.getElementById('electricity-home-id')?.value?.trim();
+                const amountStr = document.getElementById('electricity-amount')?.value?.trim();
+                const amount = amountStr ? parseFloat(amountStr) : NaN;
+                if (!amountStr || isNaN(amount) || amount <= 0) {
+                    showToast('Enter a valid amount.');
+                    return;
+                }
+                if (!selectedElectricityAccountId) {
+                    showToast('Choose an account to pay from.');
+                    return;
+                }
+                const fromAcc = userAccounts.find(a => a.id === selectedElectricityAccountId);
                 requirePinThen(() => {
                     if (electricityBillModal) { electricityBillModal.classList.remove('active'); electricityBillModal.setAttribute('aria-hidden', 'true'); }
-                    showToast('Electricity payment submitted for ' + (address || 'address') + (homeId ? ' (ID: ' + homeId + ')' : ''));
+                    showToast('Electricity payment of $' + amount.toFixed(2) + ' submitted from ' + (fromAcc?.name || 'account') + (address ? ' • ' + address : '') + (homeId ? ' (ID: ' + homeId + ')' : ''));
                 });
             });
             const withdrawSubmitBtn = document.getElementById('withdraw-submit-btn');
